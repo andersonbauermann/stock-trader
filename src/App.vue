@@ -12,13 +12,17 @@
 <script>
 
 import Header from './components/Header.vue'
+import { mapActions } from 'vuex';
 
 export default {
   components: {
     Header
   },
+  methods: {
+    ...mapActions(['initStocks'])
+  },
   created() {
-    this.$store.dispatch('initStocks')
+    this.initStocks()
   }
 };
 </script>
