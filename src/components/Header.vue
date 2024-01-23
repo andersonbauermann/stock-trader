@@ -9,7 +9,9 @@
             <v-btn flat to="/portfolio">Portfólio</v-btn>     
             <v-btn flat to="/stocks">Ações</v-btn>     
         </v-toolbar-items>
-        <v-spacer></v-spacer>
+
+        <v-spacer />
+
         <v-toolbar-items>
             <v-btn flat>Finalizar Dia</v-btn>
             <v-menu offset-y>
@@ -23,13 +25,22 @@
                     </v-list-tile>
                 </v-list>
             </v-menu>
+            <v-layout align-center>
+                <span class="text-uppercase grey--text text--darken-2">
+                    Saldo: {{ funds | currency}}
+                </span>
+            </v-layout>
         </v-toolbar-items>
     </v-toolbar>
 </template>
 
 <script>
 export default {
-
+    computed: {
+        funds() {
+            return this.$store.getters.funds
+        }
+    }
 }
 </script>
 
