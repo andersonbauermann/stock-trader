@@ -1,9 +1,14 @@
 import Vue from 'vue';
 import App from './App.vue';
+import dotenv from 'dotenv'
 import './plugins/vuetify';
+
+import './plugins/axios';
 
 import router from './router';
 import store from './store/store';
+
+dotenv.config();
 
 Vue.config.productionTip = false
 
