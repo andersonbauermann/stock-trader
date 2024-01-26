@@ -20,7 +20,7 @@
                     <v-list-tile @click="saveData">
                         <v-list-tile-title>Salvar Dados</v-list-tile-title>
                     </v-list-tile>
-                    <v-list-tile>
+                    <v-list-tile @click="loadData">
                         <v-list-tile-title>Carregar Dados</v-list-tile-title>
                     </v-list-tile>
                 </v-list>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 
 export default {
     computed: {
@@ -45,12 +45,25 @@ export default {
     },
     methods: {
         ...mapActions(['randomizeStocks']),
+        ...mapMutations(['setStocks', 'setPortfolio']),
         endDay() {
             this.randomizeStocks()
         },
         saveData() {
             const { funds, stockPortfolio, stocks } = this.$store.getters
             this.$http.put('data.json', { funds, stockPortfolio, stocks })
+        },
+        loadData() {
+            this.$http.get('data.json').then(response => {
+                const data = response.data
+                if(data) {
+                    this.setStocks(data.stocks)
+                    this.setPortfolio({
+                        funds: data.funds,
+                        stockPortfolio: data.stockPortfolio
+                    })
+                }
+            })
         }
     }
 }
